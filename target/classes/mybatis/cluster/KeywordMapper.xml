@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mytian.data.link.mapper.cluster.KeywordMapper">
+
+    <resultMap type="com.mytian.data.link.entity.Keyword" id="baseKeyResultMap">
+        <id column="id" property="id"/>
+        <result column="keyword" property="keyword"/>
+    </resultMap>
+
+    <!--<insert id="saveLink" parameterType="com.mytian.data.link.entity.Link">
+        insert into link(id,link)
+        values(#{id},#{link})
+    </insert>-->
+
+</mapper>

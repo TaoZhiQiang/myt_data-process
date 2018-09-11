@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>数据展示</title>
+
+    <style type="text/css">
+    *{margin:0;padding:0;font-family: "宋体", Arial, "新宋体";font-size:18px;color:#555555;list-style:none;}
+    .clear{clear:both;height:0;visibility:hidden;}
+    a{text-decoration:none;cursor:pointer;}
+    a:hover{color:red;text-decoration:underline;}
+    a img{border:0;vertical-align:middle;}
+    </style>
+
+    <style>
+        table{
+            /*width:"100%";*/
+            border-collapse:collapse;
+        }
+        th,td{
+            padding:10px;
+        }
+    </style>
+
+    <link rel="stylesheet" type="text/css" href="assets/bootstrap/css/jcDate.css" media="all" />
+    <script src="js/jquery.min.js"></script>
+    <script src="assets/multiple-select.js"></script>
+    <script src="js/jQuery-jcDate.js"></script>
+</head>
+
+
+<body>
+        <div style="margin:20px auto;width:100%">
+            <td>
+                <th>开始日期</th>
+                <input class="jcDate" name="startDate" id="startId" />
+            </td>
+
+            &nbsp
+            <td>
+                <th>结束日期</th>
+                <input class="jcDate" name="endDate" id="endId" />
+            </td>
+
+            &nbsp
+            <td>
+                <select class="link" id = "linkId">
+                    <option value="">域名</option>
+                    <!--&lt;!&ndash;<option  value="www.mytian.com.cn">www.mytian.com.cn</option>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<option  value="www.baidu.com">www.baidu.com</option>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<option  value="www.letev.com">www.letev.com</option>&ndash;&gt;-->
+                </select>
+            </td>
+
+            &nbsp
+            <td>
+                <select class="package" id = "packgeId" >
+                    <option value="">APP</option>
+                    <!--&lt;!&ndash;<option  value="www.mytian.com.cn">www.mytian.com.cn</option>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<option  value="www.baidu.com">www.baidu.com</option>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<option  value="www.letev.com">www.letev.com</option>&ndash;&gt;-->
+                </select>
+            </td>
+
+            &nbsp
+            <td>
+                <select class="channel" id = channelId >
+                    <option value="">渠道</option>
+                    <!--&lt;!&ndash;<option  value="www.mytian.com.cn">www.mytian.com.cn</option>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<option  value="www.baidu.com">www.baidu.com</option>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<option  value="www.letev.com">www.letev.com</option>&ndash;&gt;-->
+                </select>
+            </td>
+
+            &nbsp
+            输入关键词:<input type="key" id="keyWordId" name="keyWord"/>
+
+
+            &nbsp&nbsp
+            <td>
+                <button onclick="getRateValue()" class="btn btn-primary block full-width m-b" id="checkId">查询下载率</button>
+            </td>
+            <td>
+                <button onclick="getViewValue()" class="btn btn-primary block full-width m-b" id="checkId">查询浏览量</button>
+            </td>
+    </div>
+
+        <br><br><br>
+        <table style="table-layout:fixed;" id="tableExcel" border="1" class="box">
+            <thead>
+            <tr>
+                <!--<th>开始时间</th>-->
+                <!--<th>结束时间</th>-->
+                <th>链接</th>
+                <th>关键词</th>
+                <th>APP</th>
+                <th>平台</th>
+                <th>域名</th>
+                <th>渠道</th>
+                <th>落地页</th>
+                <th>访问量</th>
+                <th>下载量</th>
+                <th>下载率</th>
+            </tr>
+            </thead>
+
+            <tbody class="tbody" width="600">
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+
+
+<script>
+    //日期控件
+    $(function (){
+        $("input.jcDate").jcDate({
+            IcoClass : "jcDateIco",
+            Event : "click",
+            Speed : 100,
+            Left : 0,
+            Top : 28,
+            format : "-",
+            Timeout : 100
+        });
+    });
+
+    //所有频道
+    $(document).ready(function(){
+        $.ajax({
+            url:"/channel",
+            type:"POST",
+            success:function(res) {
+                // console.log(res);
+                var channelList = res;
+                for(var i=0;i<channelList.length;i++) {
+                    // var html="<option value="+(i+1)+">"+channelList[i]+"</option>";
+                    var html="<option value="+channelList[i]+">"+channelList[i]+"</option>";
+                    $(".channel").append(html);
+                }
+            }
+        });
+    })
+
+    //所有链接
+    $(document).ready(function(){
+        $.ajax({
+            url:"/link",
+            type:"POST",
+            success:function(res) {
+                // console.log(res);
+                var channelList = res;
+                for(var i=0;i<channelList.length;i++) {
+                    // var html="<option value="+(i+1)+">"+channelList[i]+"</option>";
+                    var html="<option value="+channelList[i]+">"+channelList[i]+"</option>";
+                    $(".link").append(html);
+                }
+            }
+        });
+    })
+
+    //所有包
+    $(document).ready(function(){
+        $.ajax({
+            url:"/pkg",
+            type:"POST",
+            success:function(res) {
+                // console.log(res);
+                var channelList = res;
+                for(var i=0;i<channelList.length;i++) {
+                    // var html="<option value="+(i+1)+">"+channelList[i]+"</option>";
+                    var html="<option value="+channelList[i]+">"+channelList[i]+"</option>";
+                    $(".package").append(html);
+                }
+            }
+        });
+    })
+
+
+    //将选定数据提交后台(依照下载率)
+    function getRateValue(){
+        // alert(document.getElementById("linkId").value+document.getElementById("packgeId").value
+        //     +document.getElementById("channelId").value+document.getElementById("pageId").value+document.getElementById("keyId").value);
+
+        var startDate = document.getElementById("startId").value;
+        var endDate = document.getElementById("endId").value;
+
+
+        var link = document.getElementById("linkId").value;
+        // alert(link);
+
+        var channel = document.getElementById("channelId").value;
+        // alert(channel);
+
+        var pkg_name = document.getElementById("packgeId").value;
+        // alert(pkg_name);
+
+        var keyWord = document.getElementById("keyWordId").value;
+        // alert(category);
+
+        $.ajax({
+            url:"/getRate",
+            type:"POST",
+            dataType : "json",
+            // traditional : true,
+            data:{
+                startDate:startDate,endDate:endDate,link:link,appName:pkg_name,channel:channel,keyword:keyWord
+            },
+            success:function(data) {
+                console.log(data);
+
+                $(".tbody").html(" ");
+                for(var i=0;i<data.length;i++) {
+                    var html="<tr>"+
+                        // "<td width='9%'><div width='200px'>"+data[i].startDate+"</div></td>"+
+                        // "<td width='9%'>"+data[i].endDate+"</td>"+
+                        "<td width='38%' style='word-wrap:break-word;word-break:break-all;'>"+data[i].url+"</td>"+
+                        "<td width='7%'>"+data[i].keyWord+"</td>"+
+                        "<td width='8%' style='word-wrap:break-word;word-break:break-all;;'>"+data[i].App+"</td>"+
+                        "<td width='6%'>"+data[i].plat+"</td>"+
+                        "<td width='11%' style='word-wrap:break-word;word-break:break-all;'>"+data[i].link+"</td>"+
+                        "<td width='6%'>"+data[i].channel+"</td>"+
+                        "<td width='6%' style='word-wrap:break-word;word-break:break-all;'>"+data[i].pageUrl+"</td>"+
+                        "<td width='6%'>"+data[i].count+"</td>"+
+                        "<td width='6%'>"+data[i].downloadCount+"</td>"+
+                        "<td width='6%'>"+data[i].rate+"%"+"</td>"+
+                        "</tr>";
+                    $(".tbody").append(html);
+                }
+                // aa(data);
+            },
+        })
+    }
+
+    //将选定数据提交后台(依照浏览量)
+    function getViewValue(){
+        // alert(document.getElementById("linkId").value+document.getElementById("packgeId").value
+        //     +document.getElementById("channelId").value+document.getElementById("pageId").value+document.getElementById("keyId").value);
+
+        var startDate = document.getElementById("startId").value;
+        var endDate = document.getElementById("endId").value;
+
+
+        var link = document.getElementById("linkId").value;
+        // alert(link);
+
+        var channel = document.getElementById("channelId").value;
+        // alert(channel);
+
+        var pkg_name = document.getElementById("packgeId").value;
+        // alert(pkg_name);
+
+        var keyWord = document.getElementById("keyWordId").value;
+        // alert(category);
+
+        $.ajax({
+            url:"/getView",
+            type:"POST",
+            dataType : "json",
+            // traditional : true,
+            data:{
+                startDate:startDate,endDate:endDate,link:link,pkg_name:pkg_name,channel:channel,keyword:keyWord
+            },
+            success:function(data) {
+                console.log(data);
+
+                $(".tbody").html(" ");
+                for(var i=0;i<data.length;i++) {
+                    var html="<tr>"+
+                        // "<td width='9%'><div width='200px'>"+data[i].startDate+"</div></td>"+
+                        // "<td width='9%'>"+data[i].endDate+"</td>"+
+                        "<td width='38%' style='word-wrap:break-word;word-break:break-all;'>"+data[i].url+"</td>"+
+                        "<td width='7%'>"+data[i].keyWord+"</td>"+
+                        "<td width='8%' style='word-wrap:break-word;word-break:break-all;;'>"+data[i].App+"</td>"+
+                        "<td width='6%'>"+data[i].plat+"</td>"+
+                        "<td width='11%' style='word-wrap:break-word;word-break:break-all;'>"+data[i].link+"</td>"+
+                        "<td width='6%'>"+data[i].channel+"</td>"+
+                        "<td width='6%' style='word-wrap:break-word;word-break:break-all;'>"+data[i].pageUrl+"</td>"+
+                        "<td width='6%'>"+data[i].count+"</td>"+
+                        "<td width='6%'>"+data[i].downloadCount+"</td>"+
+                        "<td width='6%'>"+data[i].rate+"%"+"</td>"+
+                        "</tr>";
+                    $(".tbody").append(html);
+                }
+            },
+        })
+    }
+
+</script>
+        <!--<table id="tableExcel" border="1" cellspacing="0" cellpadding="0" class="box"></table>-->
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mytian.data.link.mapper.cluster.PushActionMapper">
+
+    <resultMap type="com.mytian.data.link.entity.PushAction" id="basePageResultMap">
+        <id column="id" property="id"/>
+        <result column="action" property="action"/>
+        <result column="action_id" property="action_id"/>
+    </resultMap>
+
+    <!--<insert id="saveLink" parameterType="com.mytian.data.link.entity.Link">
+        insert into link(id,link)
+        values(#{id},#{link})
+    </insert>-->
+
+</mapper>

@@ -1,0 +1,35 @@
+<Configuration status="WARN">
+    <properties>
+        <property name="PATTERN">[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %c [%L] ======>>>>>> %msg%n</property>
+    </properties>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="${PATTERN}" />
+        </Console>
+        <File name="File" fileName="D:/DevData/logs">
+            <PatternLayout pattern="${PATTERN}"/>
+        </File>
+    </Appenders>
+    <Loggers>
+        <Logger name="org.apache.catalina.util.LifecycleBase" level="info" />
+        <Logger name="org.apache.coyote.http11.Http11NioProtocol" level="info" />
+        <Logger name="org.apache.tomcat.util.net.NioSelectorPool" level="info" />
+        <Logger name="org.hibernate.validator.internal.util.Version" level="info" />
+        <Logger name="org.springframework" level="info" />
+        <Logger name="com.github" level="info" />
+        <logger name="com.ibatis" level="info" />
+        <logger name="com.mytian.data.link.mapper.cluster" level="INFO" />
+        <logger name="com.mytian.data.link.mapper.master" level="INFO" />
+        <logger name="com.ibatis.common.jdbc.SimpleDataSource" level="INFO" />
+        <logger name="com.ibatis.common.jdbc.ScriptRunner" level="info" />
+        <logger name="com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate" level="info" />
+        <logger name="java.sql.Connection" level="info"  additivity="true"/>
+        <logger name="java.sql.Statement" level="info" additivity="true" />
+        <logger name="java.sql.PreparedStatement" level="info"  additivity="true"/>
+        <logger name="java.sql.ResultSet" level="info"  additivity="true"/>
+        <Root level="INFO">
+            <AppenderRef ref="Console" />
+        </Root>
+    </Loggers>
+</Configuration>
+
